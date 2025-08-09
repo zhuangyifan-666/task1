@@ -125,6 +125,62 @@ python distance_detection.py
 
 该脚本将尝试使用您的网络摄像头。如果无法访问网络摄像头，它将处理数据集中的样本图像。
 
+#### 处理单张图像的详细步骤
+
+如果您想要处理特定的单张图像，可以按照以下步骤操作：
+
+1. **修改distance_detection.py文件**：
+   - 打开`distance_detection.py`文件
+   - 找到`main()`函数中的以下代码段：
+   ```python
+   # 使用网络摄像头
+   try:
+       cap = cv2.VideoCapture(0)
+       if not cap.isOpened():
+           raise Exception("Could not open webcam")
+   except Exception as e:
+       print(f"Error opening webcam: {e}")
+       print("Trying to use a sample image instead...")
+       # 使用数据集中的样本图像
+       sample_img_path = "road_datas/images/training/1.jpg"
+   ```
+   - 将`sample_img_path`变量修改为您想要处理的图像路径，例如：
+   ```python
+   sample_img_path = "您的图像路径.jpg"
+   ```
+
+2. **运行脚本**：
+   ```
+   python distance_detection.py
+   ```
+
+3. **查看结果**：
+   - 处理后的图像将显示在一个窗口中
+   - 检测到的物体会用边界框标记出来
+   - 每个物体的距离信息会显示在边界框上方
+   - 如果有物体距离过近，顶部会显示警告信息
+   - 处理后的图像也会保存为`result.jpg`
+
+4. **关闭程序**：
+   - 按任意键关闭图像窗口
+   - 或者点击窗口的关闭按钮(X)
+
+#### 另一种方法：修改代码以接受命令行参数
+
+您也可以修改`distance_detection.py`文件，使其接受命令行参数来指定图像路径：
+
+1. **添加命令行参数支持**：
+   - 在`distance_detection.py`文件顶部导入`argparse`模块
+   - 在`main()`函数中添加参数解析代码
+   - 使用解析的参数来确定图像路径
+
+2. **使用命令行运行**：
+   ```
+   python distance_detection.py --image 您的图像路径.jpg
+   ```
+
+这样您就可以方便地处理任何单张图像，而无需每次都修改源代码。
+
 ### 批处理
 
 要处理多张图像：
